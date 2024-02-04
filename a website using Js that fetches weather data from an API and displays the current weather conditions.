@@ -1,0 +1,40 @@
+function getWeather() {
+    const cityInput = document.getElementById('cityInput').value;
+
+    if (cityInput.trim() === '') {
+        alert('Please enter a city');
+        return;
+    }
+
+    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.cod === '404') {
+                alert('City not found. Please enter a valid city.');
+            } else {
+                displayWeather(data);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+        });
+}
+
+function displayWeather(data) {
+    const weatherInfoContainer = document.getElementById('weatherInfo');
+
+    const temperature = data.main.temp;
+    const description = data.weather[0].description;
+    const cityName = data.name;
+
+    const weatherHTML = `
+        <h2>${cityName}</h2>
+        <p>Temperature: ${temperature} &#8451;</p>
+        <p>Description: ${description}</p>
+    `;
+
+    weatherInfoContainer.innerHTML = weatherHTML;
+}
