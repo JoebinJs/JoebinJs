@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>WhatsApp QR Code Generator</title>
+</head>
+<body>
+ <h1>WhatsApp QR Code Generator</h1>
+ <p>Please enter your phone number:</p>
+ <input type="text" id="phoneNumber" placeholder="Phone Number">
+ <button onclick="generateQRCode()">Generate QR Code</button>
+ <p id="qrCode"></p>
+ <script>
+    function generateQRCode() {
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const qrCodeUrl = `https://wa.me/${phoneNumber}`;
+      const qrCode = `<img src="https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrCodeUrl)}&size=150x150">`;
+      document.getElementById('qrCode').innerHTML = qrCode;
+    }
+ </script>
+</body>
+</html>
